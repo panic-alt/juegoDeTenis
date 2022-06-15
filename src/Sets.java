@@ -17,6 +17,8 @@ public class Sets {
 
 
 
+
+
     public Sets(String nombreJugadorA,
                 int probabilidadJugadorA,
                 String nombreJugadorB,
@@ -51,10 +53,23 @@ public class Sets {
         int setsJugadorA = 0;
         int setsJugadorB = 0;
         boolean ganadorDelPartido;
+        String jugadorConSaque;
+        int gamesJugados = 0;
 
 
 
         while (partidoFinalizado != true) {
+
+            if ((gamesJugados % 2) == 0) {
+                jugadorConSaque = this.nombreJugadorA;
+            } else {
+                jugadorConSaque = this.nombreJugadorB;
+            }
+
+            System.out.println("------------------------");
+            System.out.println("Sirve : " + jugadorConSaque);
+            System.out.println("------------------------");
+
 
 
             Sets.Game game = new Sets.Game(this.nombreJugadorA,
@@ -67,6 +82,7 @@ public class Sets {
 
             boolean resultadoDelGame = game.jugarGame();
             if (resultadoDelGame) {
+                gamesJugados += 1;
                 gamesGanadosJugadorA += 1;
                 System.out.println("------------------------");
                 System.out.println("| " + nombreJugadorA + " " + gamesGanadosJugadorA + " |");
@@ -75,6 +91,7 @@ public class Sets {
 
 
             } else  {
+                gamesJugados += 1;
                 gamesGanadosJugadorB += 1;
                 System.out.println("------------------------");
                 System.out.println("| " + nombreJugadorA + " " + gamesGanadosJugadorA + " |" );
@@ -180,22 +197,6 @@ public class Sets {
             Random chanceGanarPunto = new Random();
 
             while(finDelGame != true) {
-                boolean saque = true;
-                String jugadorConSaque = nombreJugadorA;
-                if (saque) {
-                    saque = false;
-                    jugadorConSaque = nombreJugadorB;
-                } else {
-                    saque = true;
-                    jugadorConSaque = nombreJugadorA;
-                }
-
-
-
-
-                System.out.println("------------------------");
-                System.out.println("Sirve : " + jugadorConSaque);
-                System.out.println("------------------------");
 
 
                 int ganaJugadorA = chanceGanarPunto.nextInt(this.probabilidadJugadorA);
@@ -248,8 +249,10 @@ public class Sets {
                     puntajeJugadorA = "30";
                 } else if (puntosJugadorA == 3) {
                     puntajeJugadorA = "40";
-                } else if (puntosJugadorA > 3 && (puntosJugadorA - puntosJugadorB) == 1) {
+                } else if (puntosJugadorA >= 3 && (puntosJugadorA - puntosJugadorB) == 1) {
                     puntajeJugadorA = "AD " + nombreJugadorA;
+                } else if (puntosJugadorA == puntosJugadorB && puntosJugadorA >= 3 && puntosJugadorB >= 3){
+                    this.scoreboard = "Deuce";
                 }
 
                 if (puntosJugadorB == 1) {
@@ -259,8 +262,11 @@ public class Sets {
                     puntajeJugadorB = "30";
                 } else if (puntosJugadorB == 3) {
                     puntajeJugadorB = "40";
-                } else if (puntosJugadorB > 3 && (puntosJugadorB - puntosJugadorA) == 1)
+                } else if (puntosJugadorB >= 3 && (puntosJugadorB - puntosJugadorA) == 1) {
                     puntajeJugadorB = "AD " + nombreJugadorB;
+                } else if (puntosJugadorB == puntosJugadorA && puntosJugadorB >= 3 && puntosJugadorA >= 3) {
+                    this.scoreboard = "Deuce";
+                }
                 this.scoreboard = puntajeJugadorA + " - " + puntajeJugadorB;
 
                 System.out.println("------------------------");
