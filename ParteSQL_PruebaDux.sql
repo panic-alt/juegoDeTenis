@@ -1,4 +1,3 @@
-
 --Todos los productos del rubro "librería", creados hoy.
 DECLARE @FechaDeHoy DATETIME = CAST( GETDATE() AS Date)
 SELECT
